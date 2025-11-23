@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giriş / Kayıt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 flex items-center justify-center min-h-screen text-white">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="fixed top-4 right-4 z-50 space-y-2">
+          {% for category, message in messages %}
+            <div class="bg-{{ 'red' if category == 'error' else 'green' }}-600 text-white px-6 py-3 rounded-lg shadow-lg">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md transition-all duration-500">
+      <h2 id="formTitle" class="text-3xl font-bold text-center mb-6">Giriş Yap</h2>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="flex flex-col gap-4">
+        <input
+          type="email"
+          placeholder="E-posta"
+          class="p-3 rounded-md bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Şifre"
+          class="p-3 rounded-md bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+        />
+        <button
+          type="submit"
+          class="bg-blue-600 hover:bg-blue-700 transition-all py-3 rounded-md font-semibold"
+        >
+          Giriş Yap
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" class="hidden flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="Ad Soyad"
+          class="p-3 rounded-md bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+        />
+        <input
+          type="email"
+          placeholder="E-posta"
+          class="p-3 rounded-md bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Şifre"
+          class="p-3 rounded-md bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+        />
+        <button
+          type="submit"
+          class="bg-green-600 hover:bg-green-700 transition-all py-3 rounded-md font-semibold"
+        >
+          Kayıt Ol
+        </button>
+      </form>
+
+      <!-- Toggle -->
+      <p class="text-center mt-6 text-sm text-gray-400">
+        <span id="toggleText">Hesabın yok mu?</span>
+        <button id="toggleButton" class="text-blue-400 hover:underline">
+          Kayıt ol
+        </button>
+      </p>
+    </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
+
+
+

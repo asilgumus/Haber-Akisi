@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yeni Blog Ekle - Admin Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-gray-900 via-indigo-900 to-purple-900 text-gray-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-800/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold tracking-tight text-yellow-400">Yeni Blog Ekle</h1>
+      <nav class="space-x-4">
+        <a href="/admin" class="hover:text-yellow-300 transition">Admin Panel</a>
+        <a href="/" class="hover:text-yellow-300 transition">Ana Sayfa</a>
+        <a href="/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition">Çıkış</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-12">
+    <div class="max-w-4xl mx-auto">
+      <!-- Back Button -->
+      <div class="mb-6">
+        <a href="/admin" class="inline-flex items-center text-yellow-400 hover:text-yellow-300 transition">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Admin Panel'e Dön
+        </a>
+      </div>
+
+      <!-- Form -->
+      <div class="bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
+        <h2 class="text-2xl font-bold text-yellow-400 mb-6">Yeni Blog Yazısı Oluştur</h2>
+        
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+          <!-- Title -->
+          <div>
+            <label for="title" class="block text-sm font-medium text-gray-300 mb-2">
+              Blog Başlığı *
+            </label>
+            <input 
+              type="text" 
+              id="title" 
+              name="title" 
+              required
+              class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              placeholder="Blog yazınızın başlığını girin..."
+            >
+          </div>
+
+          <!-- Summary -->
+          <div>
+            <label for="summary" class="block text-sm font-medium text-gray-300 mb-2">
+              Özet *
+            </label>
+            <textarea 
+              id="summary" 
+              name="summary" 
+              required
+              rows="3"
+              class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
+              placeholder="Blog yazınızın kısa özetini girin..."
+            ></textarea>
+          </div>
+
+          <!-- Content -->
+          <div>
+            <label for="content" class="block text-sm font-medium text-gray-300 mb-2">
+              İçerik *
+            </label>
+            <textarea 
+              id="content" 
+              name="content" 
+              required
+              rows="15"
+              class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
+              placeholder="Blog yazınızın detaylı içeriğini girin..."
+            ></textarea>
+            <p class="text-sm text-gray-400 mt-2">
+              İçeriğinizi paragraflara ayırmak için boş satırlar kullanabilirsiniz.
+            </p>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label for="category" class="block text-sm font-medium text-gray-300 mb-2">
+              Kategori *
+            </label>
+            <input 
+              list="categoryOptions"
+              id="category"
+              name="category"
+              required
+              class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              placeholder="Örn: genel, frontend, backend, ui"
+            >
+            <datalist id="categoryOptions">
+              {% for cat in categories %}
+              <option value="{{ cat }}"></option>
+              {% endfor %}
+            </datalist>
+            <p class="text-sm text-gray-400 mt-2">
+              Yeni bir kategori yazabilir veya listeden seçebilirsiniz.
+            </p>
+          </div>
+
+          <!-- Image Upload -->
+          <div>
+            <label for="image" class="block text-sm font-medium text-gray-300 mb-2">
+              Kapak Görseli
+            </label>
+            <input 
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            >
+            <p class="text-sm text-gray-400 mt-2">İsteğe bağlı. jpg, png, webp desteklenir.</p>
+            
+            <!-- Image Preview -->
+            <div id="imagePreview" class="mt-4 hidden">
+              <label class="block text-sm font-medium text-gray-300 mb-2">Görsel Önizleme:</label>
+              <div class="relative inline-block">
+                <img id="previewImg" src="" alt="Önizleme" class="max-w-xs max-h-48 rounded-lg border border-gray-600">
+                <button type="button" id="removePreview" class="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
+                  ×
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="flex space-x-4 pt-6">
+            <button 
+              type="submit" 
+              class="flex-1 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition flex items-center justify-center"
+            >
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Blog Yazısını Oluştur
+            </button>
+            <a 
+              href="/admin" 
+              class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition text-center"
+            >
+              İptal
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tips -->
+      <div class="mt-8 bg-blue-900/20 border border-blue-500/30 rounded-2xl p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-3">💡 İpuçları</h3>
+        <ul class="text-gray-300 space-y-2 text-sm">
+          <li>• Başlık kısa ve açıklayıcı olmalıdır</li>
+          <li>• Özet, okuyucuların ilgisini çekecek şekilde yazılmalıdır</li>
+          <li>• İçerikte paragraflar arasında boş satır bırakın</li>
+          <li>• Blog yazınızı oluşturduktan sonra düzenleyebilirsiniz</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800/80 backdrop-blur-md py-6 text-center text-gray-400 mt-16">
+    &copy; 2025 Modern Blog. Tüm hakları saklıdır.
+  </footer>
+
+  <script>
+    // Form validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const title = document.getElementById('title').value.trim();
+      const summary = document.getElementById('summary').value.trim();
+      const content = document.getElementById('content').value.trim();
+      const category = document.getElementById('category').value.trim();
+      
+      if (!title || !summary || !content || !category) {
+        e.preventDefault();
+        alert('Lütfen tüm alanları doldurun.');
+        return;
+      }
+      
+      if (title.length < 5) {
+        e.preventDefault();
+        alert('Başlık en az 5 karakter olmalıdır.');
+        return;
+      }
+      
+      if (summary.length < 10) {
+        e.preventDefault();
+        alert('Özet en az 10 karakter olmalıdır.');
+        return;
+      }
+      
+      if (content.length < 50) {
+        e.preventDefault();
+        alert('İçerik en az 50 karakter olmalıdır.');
+        return;
+      }
+    });
+
+    // Character counters
+    function updateCounter(fieldId, minLength) {
+      const field = document.getElementById(fieldId);
+      const value = field.value.trim();
+      const isValid = value.length >= minLength;
+      
+      field.classList.toggle('border-red-500', !isValid && value.length > 0);
+      field.classList.toggle('border-green-500', isValid);
+    }
+
+    document.getElementById('title').addEventListener('input', () => updateCounter('title', 5));
+    document.getElementById('summary').addEventListener('input', () => updateCounter('summary', 10));
+    document.getElementById('content').addEventListener('input', () => updateCounter('content', 50));
+    // Image Preview Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const imageInput = document.getElementById('image');
+      const imagePreview = document.getElementById('imagePreview');
+      const previewImg = document.getElementById('previewImg');
+      const removePreview = document.getElementById('removePreview');
+      
+      if (imageInput) {
+        imageInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              previewImg.src = e.target.result;
+              imagePreview.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+      
+      if (removePreview) {
+        removePreview.addEventListener('click', function() {
+          imagePreview.classList.add('hidden');
+          imageInput.value = '';
+          previewImg.src = '';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

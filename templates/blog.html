@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haber Akışı - En Güncel Haberler</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background-color: #0f172a; /* tailwind's slate-900 */
+    }
+    .card-hover-effect {
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    }
+    .card-hover-effect:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-gray-200">
+
+  <!-- Header -->
+  <header class="bg-slate-800/70 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-700/50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a href="/" class="text-2xl font-extrabold tracking-tight">
+            <span class="text-white">Haber</span><span class="text-cyan-400">Akışı</span>
+          </a>
+        </div>
+        
+        <!-- Ana Navigasyon (Masaüstü) -->
+        <nav class="hidden md:flex items-center space-x-6">
+          {% for category in categories[:4] %}
+          <a href="/category/{{ category.category | lower | replace(' ', '-') }}" class="font-semibold text-gray-300 hover:text-cyan-400 transition-colors duration-200">{{ category.category }}</a>
+          {% endfor %}
+        </nav>
+
+        <!-- Arama ve Mobil Menü Butonu -->
+        <div class="flex items-center space-x-4">
+          <div class="relative">
+            <input type="search" placeholder="Haberlerde ara..." class="bg-slate-700/80 w-32 md:w-48 text-white placeholder-gray-400 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all">
+            <svg class="w-5 h-5 text-gray-400 absolute top-1/2 right-3 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+          </div>
+          <button class="md:hidden text-gray-300 hover:text-cyan-400">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ana İçerik Alanı -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!-- Kategori Seçimi -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold text-white mb-6 text-center">Kategorilere Göz Atın</h2>
+      <div class="flex flex-wrap justify-center gap-4">
+        {% for category in categories %}
+        <a href="/category/{{ category.category | lower | replace(' ', '-') }}" 
+           class="group bg-slate-800/60 hover:bg-slate-700/80 ring-1 ring-white/10 hover:ring-cyan-400/50 rounded-xl px-6 py-4 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="flex items-center space-x-3">
+            <div class="w-3 h-3 bg-cyan-400 rounded-full group-hover:bg-cyan-300 transition-colors"></div>
+            <span class="font-semibold text-white group-hover:text-cyan-300 transition-colors">{{ category.category }}</span>
+            <span class="text-xs bg-slate-700 group-hover:bg-slate-600 px-2 py-1 rounded-full text-gray-300 group-hover:text-white transition-colors">{{ category.count }}</span>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      
+      <!-- Ana Haber Akışı (Sol Taraf) -->
+      <div class="lg:col-span-2">
+        <h2 class="text-3xl font-bold border-b-2 border-cyan-500/50 pb-2 mb-8">Öne Çıkanlar</h2>
+        
+        <!-- JS BU ALANI DOLDURACAK. CSS ile ilk eleman farklı görünecek. -->
+        <div id="blogList" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 
+                ÖRNEK KART YAPISI (Bu alan JS tarafından dinamik olarak doldurulacaktır):
+                Not: JS'in oluşturacağı ilk kart, CSS'teki 'first:' seçicisi sayesinde otomatik olarak genişleyecektir.
+            -->
+            <!--
+            <a href="#" class="card-hover-effect group block bg-slate-800/60 ring-1 ring-white/10 rounded-lg overflow-hidden md:col-span-2">
+                <div class="md:flex">
+                    <div class="md:w-1/2">
+                        <img class="h-48 w-full object-cover md:h-full" src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?q=80&w=2070" alt="Haber Resmi">
+                    </div>
+                    <div class="p-6 md:w-1/2 flex flex-col justify-center">
+                        <span class="text-xs font-bold uppercase text-cyan-400 tracking-wider">Teknoloji</span>
+                        <h3 class="mt-2 text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">Yapay Zeka Sanat Dünyasını Nasıl Değiştiriyor?</h3>
+                        <p class="mt-3 text-gray-400 text-sm leading-relaxed">AI tarafından üretilen sanat eserleri, yaratıcılığın sınırlarını zorlarken sanatçılar ve eleştirmenler arasında yeni tartışmalar başlatıyor.</p>
+                        <div class="mt-4 text-xs text-gray-500">
+                            <span>Ahmet Yılmaz • 15 Mart 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            ...diğer kartlar buraya gelecek...
+            -->
+        </div>
+      </div>
+
+      <!-- Sidebar (Sağ Taraf) -->
+      <aside class="lg:col-span-1">
+        <div class="sticky top-24">
+          <div class="bg-slate-800/60 ring-1 ring-white/10 rounded-lg p-6">
+            <h3 class="text-xl font-bold border-b-2 border-cyan-500/50 pb-2 mb-4">Popüler Kategoriler</h3>
+            <ul class="space-y-3">
+              {% for category in categories %}
+              <li><a href="/category/{{ category.category | lower | replace(' ', '-') }}" class="flex justify-between items-center text-gray-300 hover:text-cyan-400 transition-colors"><span class="font-medium">{{ category.category }}</span><span class="text-xs bg-slate-700 px-2 py-1 rounded-full">{{ category.count }}</span></a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-800/70 border-t border-slate-700/50 mt-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Site Bilgisi -->
+        <div>
+          <h3 class="text-lg font-extrabold"><span class="text-white">Haber</span><span class="text-cyan-400">Akışı</span></h3>
+          <p class="mt-2 text-gray-400 text-sm">Tarafsız, hızlı ve güvenilir haberin adresi.</p>
+        </div>
+        <!-- Linkler -->
+        <div>
+          <h4 class="font-semibold tracking-wider uppercase text-gray-400">Site Haritası</h4>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li><a href="#" class="text-gray-300 hover:text-cyan-400 transition">Hakkımızda</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-cyan-400 transition">İletişim</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-cyan-400 transition">Kariyer</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-cyan-400 transition">Gizlilik Politikası</a></li>
+          </ul>
+        </div>
+        <!-- Kategoriler -->
+        <div>
+          <h4 class="font-semibold tracking-wider uppercase text-gray-400">Kategoriler</h4>
+          <ul class="mt-4 space-y-2 text-sm">
+            {% for category in categories %}
+            <li><a href="/category/{{ category.category | lower | replace(' ', '-') }}" class="text-gray-300 hover:text-cyan-400 transition">{{ category.category }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <!-- Sosyal Medya -->
+        <div>
+          <h4 class="font-semibold tracking-wider uppercase text-gray-400">Bizi Takip Edin</h4>
+          <div class="flex mt-4 space-x-4">
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition">
+              <span class="sr-only">Twitter</span>
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+            </a>
+            <!-- Diğer sosyal medya ikonları eklenebilir -->
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 border-t border-slate-700/50 pt-8 text-center text-sm text-gray-500">
+        &copy; 2025 HaberAkışı. Tüm hakları saklıdır.
+      </div>
+    </div>
+  </footer>
+
+  <!--
+    =====================================================================
+    BU ALAN KESİNLİKLE DEĞİŞTİRİLMEMELİDİR.
+    Mevcut JavaScript kodunuzun çalışması için bu iki satır kritiktir.
+    Backend'den gelen veriler bu div üzerinden okunur ve blog.js dosyası
+    bu verileri işleyerek #blogList içine haber kartlarını ekler.
+    =====================================================================
+  -->
+  <div id="blog-data" data-blogs='{{ blogs | tojson | safe }}' style="display: none;"></div>  
+  <script src="{{ url_for('static', filename='blog.js') }}"></script>
+
+</body>
+</html>

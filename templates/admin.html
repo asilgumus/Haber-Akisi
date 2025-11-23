@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Modern Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-gray-900 via-indigo-900 to-purple-900 text-gray-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-800/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold tracking-tight text-yellow-400">Admin Panel</h1>
+      <nav class="space-x-4">
+        <a href="/" class="hover:text-yellow-300 transition">Ana Sayfa</a>
+        <a href="/blog" class="hover:text-yellow-300 transition">Blog</a>
+        <a href="/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition">Çıkış</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container mx-auto px-6 py-4">
+        {% for category, message in messages %}
+          <div class="bg-{{ 'green' if category == 'success' else 'red' }}-600 text-white px-6 py-3 rounded-lg mb-4">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-12">
+    <!-- Admin Actions -->
+    <div class="mb-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-yellow-400">Blog Yönetimi</h2>
+        <a href="/admin/blog/new" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          Yeni Blog Ekle
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog List -->
+    <div class="bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-700">
+            <tr>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">ID</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Başlık</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Özet</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Kategori</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Yazar</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Tarih</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">İşlemler</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-600">
+            {% for blog in blogs %}
+            <tr class="hover:bg-gray-700/50 transition">
+              <td class="px-6 py-4 text-sm text-gray-300">#{{ blog.id }}</td>
+              <td class="px-6 py-4 text-sm text-white font-medium">{{ blog.title }}</td>
+              <td class="px-6 py-4 text-sm text-gray-300 max-w-xs truncate">{{ blog.summary }}</td>
+              <td class="px-6 py-4 text-sm text-gray-300">
+                <a class="underline hover:text-yellow-300" href="/category/{{ (blog.category or 'genel') | lower | replace(' ', '-') }}">{{ blog.category or 'genel' }}</a>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-300">{{ blog.author_name if blog.author_name else 'Bilinmiyor' }}</td>
+              <td class="px-6 py-4 text-sm text-gray-300">{{ blog.created_at[:10] }}</td>
+              <td class="px-6 py-4 text-sm">
+                <div class="flex space-x-2">
+                  <a href="/blogDetail.html/id={{ blog.id }}" class="text-blue-400 hover:text-blue-300 transition" title="Görüntüle">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                  </a>
+                  <a href="/admin/blog/edit/{{ blog.id }}" class="text-yellow-400 hover:text-yellow-300 transition" title="Düzenle">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                  </a>
+                  <button class="delete-blog-btn text-red-400 hover:text-red-300 transition" title="Sil" data-blog-id="{{ blog.id }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    {% if not blogs %}
+    <div class="text-center py-16">
+      <div class="text-gray-400 mb-4">
+        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold text-gray-300 mb-2">Henüz blog yazısı yok</h3>
+      <p class="text-gray-400 mb-6">İlk blog yazınızı oluşturmak için yukarıdaki butona tıklayın.</p>
+      <a href="/admin/blog/new" class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+        İlk Blog Yazısını Oluştur
+      </a>
+    </div>
+    {% endif %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800/80 backdrop-blur-md py-6 text-center text-gray-400 mt-16">
+    &copy; 2025 Modern Blog. Tüm hakları saklıdır.
+  </footer>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-gray-800 rounded-2xl p-8 max-w-md mx-4">
+      <h3 class="text-xl font-semibold text-white mb-4">Blog Yazısını Sil</h3>
+      <p class="text-gray-300 mb-6">Bu işlem geri alınamaz. Blog yazısını silmek istediğinizden emin misiniz?</p>
+      <div class="flex space-x-4">
+        <button onclick="hideDeleteModal()" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">
+          İptal
+        </button>
+        <button id="confirmDelete" class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition">
+          Sil
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='admin.js') }}"></script>
+</body>
+</html>

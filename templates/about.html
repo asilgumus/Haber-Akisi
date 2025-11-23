@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hakkımızda — HaberAkışı</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Professional Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fadeInUp {
+      animation: fadeInUp 0.4s ease-out;
+    }
+    
+    .animate-slideInDown {
+      animation: slideInDown 0.3s ease-out;
+    }
+    
+    .hover-lift {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hover-glow:hover {
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    }
+    
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-200">
+
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur supports-[backdrop-filter]:bg-slate-900/70 border-b border-slate-800 animate-slideInDown">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/blog" class="text-2xl font-extrabold hover-glow"><span class="text-white">Haber</span><span class="text-sky-400">Akışı</span></a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
+                <button onclick="window.location.href=document.referrer||window.history.back()" class="hover:text-sky-400 text-slate-300 transition-colors duration-200">Geri Dön</button>
+
+        <!-- <a class="hover:text-sky-400 text-slate-300 transition-colors duration-200" href="/blog">Ana Sayfa</a> -->
+        <a class="hover:text-sky-400 text-slate-300 transition-colors duration-200" href="/contact">İletişim</a>
+        <a class="hover:text-sky-400 text-slate-300 transition-colors duration-200" href="/about">Hakkımızda</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-16 animate-fadeInUp">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-white">Hakkımızda</h1>
+        <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+          HaberAkışı, güncel ve güvenilir haberleri okuyucularına ulaştıran modern bir haber platformudur.
+        </p>
+      </div>
+
+      <!-- Mission -->
+      <div class="bg-slate-900/70 ring-1 ring-sky-500/30 rounded-3xl p-8 mb-12 animate-fadeInUp stagger-1 hover-lift hover-glow">
+        <h2 class="text-2xl font-bold mb-6 text-white">Misyonumuz</h2>
+        <p class="text-slate-300 leading-relaxed mb-4">
+          HaberAkışı olarak, okuyucularımıza en güncel, doğru ve objektif haberleri sunmayı hedefliyoruz. 
+          Teknoloji, bilim, finans ve gündem konularında uzman editörlerimizle kaliteli içerik üretiyoruz.
+        </p>
+        <p class="text-slate-300 leading-relaxed">
+          Amacımız, bilgi çağında doğru bilgiye erişimi kolaylaştırmak ve okuyucularımızın 
+          güncel gelişmeleri takip etmesini sağlamaktır.
+        </p>
+      </div>
+
+      <!-- Values -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="bg-slate-900/70 ring-1 ring-sky-500/30 rounded-3xl p-6 text-center animate-fadeInUp stagger-1 hover-lift hover-glow">
+          <div class="w-16 h-16 bg-sky-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Doğruluk</h3>
+          <p class="text-slate-300 text-sm">Tüm haberlerimiz titizlikle kontrol edilir ve doğruluğu garanti edilir.</p>
+        </div>
+
+        <div class="bg-slate-900/70 ring-1 ring-sky-500/30 rounded-3xl p-6 text-center animate-fadeInUp stagger-2 hover-lift hover-glow">
+          <div class="w-16 h-16 bg-sky-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Hız</h3>
+          <p class="text-slate-300 text-sm">Gelişmeleri anında takip eder ve okuyucularımıza hızla ulaştırırız.</p>
+        </div>
+
+        <div class="bg-slate-900/70 ring-1 ring-sky-500/30 rounded-3xl p-6 text-center animate-fadeInUp stagger-3 hover-lift hover-glow">
+          <div class="w-16 h-16 bg-sky-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Kalite</h3>
+          <p class="text-slate-300 text-sm">Her içeriğimiz uzman editörler tarafından hazırlanır ve kalite standartlarımıza uygun olur.</p>
+        </div>
+      </div>
+
+      <!-- Team -->
+      <div class="bg-slate-900/70 ring-1 ring-sky-500/30 rounded-3xl p-8 mb-12 animate-fadeInUp stagger-4 hover-lift hover-glow">
+        <h2 class="text-2xl font-bold mb-6 text-white">Ekibimiz</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="flex items-start gap-4 animate-fadeInUp stagger-1">
+            <div class="w-16 h-16 bg-sky-500/20 rounded-2xl flex items-center justify-center">
+              <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2">Editör Ekibi</h3>
+              <p class="text-slate-300 text-sm">Deneyimli gazeteciler ve editörlerden oluşan ekibimiz, her gün en güncel haberleri hazırlar.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 animate-fadeInUp stagger-2">
+            <div class="w-16 h-16 bg-sky-500/20 rounded-2xl flex items-center justify-center">
+              <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2">Teknoloji Ekibi</h3>
+              <p class="text-slate-300 text-sm">Modern teknolojiler kullanarak platformumuzu sürekli geliştiren yazılım ekibimiz.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact CTA -->
+      <div class="text-center animate-fadeInUp">
+        <h2 class="text-2xl font-bold mb-4 text-white">Bizimle İletişime Geçin</h2>
+        <p class="text-slate-300 mb-6">Sorularınız, önerileriniz veya işbirliği teklifleriniz için bizimle iletişime geçebilirsiniz.</p>
+        <a href="/contact" class="inline-flex items-center bg-sky-500 hover:bg-sky-400 text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200">
+          İletişim Sayfası
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 py-8 text-center text-sm text-slate-400">
+    &copy; 2025 HaberAkışı. Tüm hakları saklıdır.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haber Akışı — V3 Magazin Tasarım</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Animasyonlar */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .animate-fadeInUp {
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .animate-fadeInLeft {
+      animation: fadeInLeft 0.6s ease-out;
+    }
+    
+    .animate-fadeInRight {
+      animation: fadeInRight 0.6s ease-out;
+    }
+    
+    .animate-scaleIn {
+      animation: scaleIn 0.5s ease-out;
+    }
+    
+    .animate-slideInDown {
+      animation: slideInDown 0.5s ease-out;
+    }
+    
+    .animate-pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .animate-slideInUp {
+      animation: slideInUp 0.6s ease-out;
+    }
+    
+    .animate-slideInLeft {
+      animation: slideInLeft 0.6s ease-out;
+    }
+    
+    .animate-slideInRight {
+      animation: slideInRight 0.6s ease-out;
+    }
+    
+    .hover-lift {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hover-glow:hover {
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+    }
+    
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+    .stagger-6 { animation-delay: 0.6s; }
+    .stagger-7 { animation-delay: 0.7s; }
+    .stagger-8 { animation-delay: 0.8s; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-200">
+
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur supports-[backdrop-filter]:bg-slate-900/70 border-b border-slate-800 animate-slideInDown">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/blog" class="text-2xl font-extrabold animate-slideInLeft"><span class="text-white">Haber</span><span class="text-sky-400">Akışı</span></a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold animate-fadeInUp">
+        <a class="hover:text-sky-400 text-slate-300 transition-colors duration-300" href="/blog">Ana Sayfa</a>
+        <a class="hover:text-sky-400 text-slate-300 transition-colors duration-300" href="/contact">İletişim</a>
+        <a class="hover:text-sky-400 text-slate-300 transition-colors duration-300" href="/about">Hakkımızda</a>
+      </nav>
+      <div class="hidden md:block animate-slideInRight">
+        <div class="relative">
+          <input type="search" id="searchInput" placeholder="Ara" class="w-56 bg-slate-800/90 border border-slate-700 text-slate-200 placeholder-slate-400 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all duration-300">
+          <svg class="w-5 h-5 text-slate-400 absolute top-1/2 right-3 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Magazine Hero: Feature + Right Rail -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <!-- Category Selection (Left Side) -->
+      <aside class="lg:col-span-1">
+        <div class="bg-slate-900/70 ring-1 ring-sky-500/30 rounded-3xl p-6 sticky top-24">
+          <h4 class="text-sm font-extrabold text-white tracking-wide mb-4">Kategori Seçin</h4>
+          <div class="space-y-2">
+            <button onclick="filterByCategory('all')" class="category-btn active w-full text-left bg-sky-500 hover:bg-sky-400 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200" data-category="all">
+              Tümü
+            </button>
+            {% for category in categories %}
+            <button onclick="filterByCategory('{{ category.category | lower | replace(' ', '-') }}')" class="category-btn w-full text-left bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200" data-category="{{ category.category | lower | replace(' ', '-') }}">
+              {{ category.category }}
+            </button>
+            {% endfor %}
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="lg:col-span-3">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Feature (first blog) -->
+          <div class="lg:col-span-2">
+        {% for blog in blogs %}
+          {% if loop.first %}
+          <a href="/blogDetail.html/id={{ blog.id }}" class="block rounded-3xl overflow-hidden bg-slate-900/70 ring-1 ring-sky-500/30 hover:ring-sky-400/60 transition-all duration-300 hover-lift animate-fadeInUp">
+            {% if blog.image_path %}
+            <img src="{{ blog.image_path }}" alt="Kapak" class="h-64 w-full object-cover transition-transform duration-300 hover:scale-105">
+            {% else %}
+            <div class="h-64 bg-gradient-to-br from-slate-800 via-sky-900/20 to-slate-900"></div>
+            {% endif %}
+            <div class="p-8">
+              <h1 class="text-2xl font-extrabold text-white leading-tight mb-3">{{ blog.title }}</h1>
+              <span class="inline-block text-xs font-medium text-sky-400 border border-sky-400/30 px-3 py-1 rounded-md hover:bg-sky-400/10 transition-colors duration-200">{{ blog.category or 'genel' }}</span>
+              <p class="mt-4 text-slate-300 text-base leading-relaxed">{{ blog.summary }}</p>
+              <div class="mt-6 text-xs text-slate-400">{{ blog.author_name or 'Bilinmiyor' }} • {{ blog.created_at[:10] }}</div>
+            </div>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Right rail (next 3) -->
+      <div class="space-y-4">
+        {% for blog in blogs %}
+          {% if not loop.first and loop.index0 < 4 %}
+          <a href="/blogDetail.html/id={{ blog.id }}" class="block rounded-2xl overflow-hidden bg-slate-900/70 ring-1 ring-sky-500/30 hover:ring-sky-400/60 transition-all duration-300 hover-lift animate-fadeInUp stagger-{{ loop.index0 + 1 }}">
+            {% if blog.image_path %}
+            <img src="{{ blog.image_path }}" alt="Kapak" class="h-28 w-full object-cover transition-transform duration-300 hover:scale-105">
+            {% else %}
+            <div class="h-28 bg-gradient-to-br from-slate-900 via-sky-900/10 to-slate-900"></div>
+            {% endif %}
+            <div class="p-5">
+              <h3 class="text-base font-bold text-white leading-tight mb-2">{{ blog.title }}</h3>
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="text-sky-400 border border-sky-400/30 px-2 py-0.5 rounded text-[10px]">{{ blog.category or 'genel' }}</span>
+                <span>{{ blog.created_at[:10] }}</span>
+              </div>
+            </div>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stream: Card Grid + Sticky Sidebar -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Ana İçerik Alanı (Kartlar + Sayfalama) -->
+      <div class="lg:col-span-3">
+        <!-- Card Grid -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4" id="blogGrid">
+          {% for blog in blogs %}
+            {% if loop.index0 >= 4 %}
+            <a href="/blogDetail.html/id={{ blog.id }}" class="group rounded-2xl overflow-hidden bg-slate-900/70 ring-1 ring-sky-500/30 hover:ring-sky-400/60 transition-all duration-300 hover-lift animate-fadeInUp stagger-{{ (loop.index0 - 4) % 6 + 1 }}">
+              {% if blog.image_path %}
+              <img src="{{ blog.image_path }}" alt="Kapak" class="h-32 w-full object-cover transition-transform duration-300 group-hover:scale-105">
+              {% else %}
+              <div class="h-32 bg-gradient-to-br from-slate-900 via-sky-900/10 to-slate-900"></div>
+              {% endif %}
+              <div class="p-5">
+                <h4 class="text-sm font-bold text-white group-hover:text-sky-300 line-clamp-2 transition-colors duration-300 leading-tight mb-2">{{ blog.title }}</h4>
+                <span class="inline-block text-[10px] text-sky-400 border border-sky-400/30 px-2 py-0.5 rounded mb-2">{{ blog.category or 'genel' }}</span>
+                <p class="mt-2 text-xs text-slate-300 line-clamp-2 leading-relaxed">{{ blog.summary }}</p>
+                <div class="mt-3 flex items-center justify-between text-[10px] text-slate-400">
+                  <span>{{ blog.author_name or 'Bilinmiyor' }} • {{ blog.created_at[:10] }}</span>
+                  <span class="flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+                    </svg>
+                    {{ blog.likes or 0 }}
+                  </span>
+                </div>
+              </div>
+            </a>
+            {% endif %}
+          {% endfor %}
+        </section>
+
+        <!-- Pagination Controls -->
+        {% if total_pages > 1 %}
+        <div class="flex justify-center items-center space-x-4 mt-8">
+          {% if has_prev %}
+          <a href="/blog?page={{ prev_num }}" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition-colors duration-200 flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Önceki
+          </a>
+          {% endif %}
+          
+          <div class="flex items-center space-x-2">
+            {% for page_num in range(1, total_pages + 1) %}
+              {% if page_num == page %}
+              <span class="px-3 py-2 bg-sky-500 text-white rounded-lg font-semibold">{{ page_num }}</span>
+              {% else %}
+              <a href="/blog?page={{ page_num }}" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition-colors duration-200">{{ page_num }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+          
+          {% if has_next %}
+          <a href="/blog?page={{ next_num }}" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition-colors duration-200 flex items-center">
+            Sonraki
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="lg:col-span-1 space-y-6">
+        <!-- Category Chips -->
+        
+
+        <!-- Trending -->
+        <div class="rounded-2xl bg-slate-900/70 ring-1 ring-white/10 p-6 animate-slideInLeft stagger-2">
+          <h4 class="text-sm font-extrabold text-white tracking-wide">Trendler</h4>
+          <ol class="mt-4 space-y-3 list-decimal list-inside text-sm text-slate-300">
+            {% for blog in trending_blogs %}
+              <li class="animate-fadeInUp stagger-{{ loop.index + 1 }}">
+                <a href="/blogDetail.html/id={{ blog.id }}" class="hover:text-sky-300 transition-colors duration-300">
+                  {{ blog.title }}
+                </a>
+                <span class="text-xs text-slate-400 ml-2">({{ blog.likes }} beğeni)</span>
+              </li>
+            {% endfor %}
+          </ol>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="rounded-2xl bg-slate-900/70 ring-1 ring-white/10 p-6 animate-slideInLeft stagger-3">
+          <h4 class="text-sm font-extrabold text-white tracking-wide">Bülten</h4>
+          <p class="mt-2 text-sm text-slate-300">Haftalık özetleri e-posta kutuna al.</p>
+          <form class="mt-4 space-y-3" onsubmit="event.preventDefault(); alert('Bültene kaydınız alındı (demo).');">
+            <input type="email" required placeholder="E-posta adresiniz" class="w-full bg-slate-800 border border-slate-700 text-slate-200 placeholder-slate-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all duration-300">
+            <button class="w-full bg-sky-500 hover:bg-sky-400 text-white font-semibold rounded-lg px-4 py-2 transition-all duration-300 hover:scale-105">Kaydol</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 py-8 text-center text-sm text-slate-400 animate-fadeInUp">&copy; 2025 HaberAkışı. Tüm hakları saklıdır.</footer>
+
+  <script>
+    // Category Filtering Functionality
+    function filterByCategory(categorySlug) {
+      // Update active button
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-sky-500', 'text-white');
+        btn.classList.add('bg-slate-800', 'text-slate-200');
+      });
+      
+      const activeBtn = document.querySelector(`[data-category="${categorySlug}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-sky-500', 'text-white');
+        activeBtn.classList.remove('bg-slate-800', 'text-slate-200');
+      }
+      
+      // Redirect to category page or show all
+      if (categorySlug === 'all') {
+        window.location.href = '/blog';
+      } else {
+        window.location.href = `/category/${categorySlug}`;
+      }
+    }
+
+    // Global Search Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const blogGrid = document.getElementById('blogGrid');
+      const pagination = document.querySelector('.flex.justify-center.items-center.space-x-4'); // Pagination container
+      const heroSection = document.querySelector('section.py-10'); // Hero section
+
+      let originalGridHTML = blogGrid.innerHTML;
+      let isSearching = false;
+
+      function renderBlogCard(blog) {
+        return `
+          <a href="/blogDetail.html/id=${blog.id}" class="group rounded-2xl overflow-hidden bg-slate-900/70 ring-1 ring-sky-500/30 hover:ring-sky-400/60 transition-all duration-300 hover-lift animate-fadeInUp">
+            ${blog.image_path ?
+              `<img src="${blog.image_path}" alt="Kapak" class="h-32 w-full object-cover transition-transform duration-300 group-hover:scale-105">` :
+              `<div class="h-32 bg-gradient-to-br from-slate-900 via-sky-900/10 to-slate-900"></div>`
+            }
+            <div class="p-5">
+              <h4 class="text-sm font-bold text-white group-hover:text-sky-300 line-clamp-2 transition-colors duration-300 leading-tight mb-2">${blog.title}</h4>
+              <span class="inline-block text-[10px] text-sky-400 border border-sky-400/30 px-2 py-0.5 rounded mb-2">${blog.category || 'genel'}</span>
+              <p class="mt-2 text-xs text-slate-300 line-clamp-2 leading-relaxed">${blog.summary}</p>
+              <div class="mt-3 flex items-center justify-between text-[10px] text-slate-400">
+                <span>${blog.author_name || 'Bilinmiyor'} • ${blog.created_at.slice(0, 10)}</span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+                  </svg>
+                  ${blog.likes || 0}
+                </span>
+              </div>
+            </div>
+          </a>
+        `;
+      }
+
+      if (searchInput && blogGrid) {
+        searchInput.addEventListener('input', function(e) {
+          const query = e.target.value.trim();
+
+          if (query === '') {
+            // Restore original content
+            blogGrid.innerHTML = originalGridHTML;
+            if (pagination) pagination.style.display = '';
+            if (heroSection) heroSection.style.display = '';
+            isSearching = false;
+            return;
+          }
+
+          // Perform global search
+          fetch(`/api/search-blogs?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+              const blogs = data.blogs;
+
+              if (blogs.length > 0) {
+                blogGrid.innerHTML = blogs.map(blog => renderBlogCard(blog)).join('');
+              } else {
+                blogGrid.innerHTML = `
+                  <div class="col-span-full text-center py-16">
+                    <div class="text-gray-400 mb-4">
+                      <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-300 mb-2">Arama sonucu bulunamadı</h3>
+                    <p class="text-gray-400">Başka bir arama terimi deneyin.</p>
+                  </div>
+                `;
+              }
+
+              // Hide pagination and hero during search
+              if (pagination) pagination.style.display = 'none';
+              if (heroSection) heroSection.style.display = 'none';
+              isSearching = true;
+            })
+            .catch(error => {
+              console.error('Search error:', error);
+              blogGrid.innerHTML = '<div class="col-span-full text-center py-16 text-gray-400">Arama sırasında hata oluştu.</div>';
+            });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
+

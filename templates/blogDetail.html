@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Detayı</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Animasyonlar */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0,0,0);
+      }
+      40%, 43% {
+        transform: translate3d(0, -30px, 0);
+      }
+      70% {
+        transform: translate3d(0, -15px, 0);
+      }
+      90% {
+        transform: translate3d(0, -4px, 0);
+      }
+    }
+    
+    .animate-fadeInUp {
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .animate-fadeInLeft {
+      animation: fadeInLeft 0.6s ease-out;
+    }
+    
+    .animate-fadeInRight {
+      animation: fadeInRight 0.6s ease-out;
+    }
+    
+    .animate-scaleIn {
+      animation: scaleIn 0.5s ease-out;
+    }
+    
+    .animate-slideInDown {
+      animation: slideInDown 0.5s ease-out;
+    }
+    
+    .animate-pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .animate-bounce {
+      animation: bounce 1s;
+    }
+    
+    .hover-lift {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+    .stagger-6 { animation-delay: 0.6s; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-200">
+
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur supports-[backdrop-filter]:bg-slate-900/70 border-b border-slate-800 animate-slideInDown">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/blog" class="text-2xl font-extrabold animate-fadeInLeft"><span class="text-white">Haber</span><span class="text-sky-400">Akışı</span></a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold animate-fadeInRight">
+        <a class="hover:text-sky-400 text-slate-300 transition-colors duration-300" href="/blog">Ana Sayfa</a>
+        <a class="hover:text-sky-400 text-slate-300 transition-colors duration-300" href="/contact">İletişim</a>
+        <a class="hover:text-sky-400 text-slate-300 transition-colors duration-300" href="/about">Hakkımızda</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Blog Detayı -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Loading State -->
+    <div id="loadingState" class="bg-slate-900/70 ring-1 ring-sky-500/30 rounded-3xl p-12 max-w-4xl mx-auto text-center animate-fadeInUp">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-400 mx-auto mb-4"></div>
+      <p class="text-slate-300 animate-pulse">Blog yükleniyor...</p>
+    </div>
+
+    <!-- Blog Content -->
+    <div id="blogDetail" class="max-w-4xl mx-auto hidden">
+        <!-- Hero Section with Image -->
+      <div class="mb-8">
+        <div id="blogImageContainer" class="mb-8 rounded-3xl overflow-hidden ring-1 ring-sky-500/30 animate-fadeInUp">
+          <img id="blogImage" src="" alt="Blog Kapak" class="w-full h-96 object-cover transition-transform duration-500 hover:scale-105">
+        </div>
+        
+        <div class="flex items-center justify-between mb-6 animate-fadeInUp stagger-1">
+          <div class="flex items-center gap-4">
+            <span id="blogCategory" class="inline-block text-xs font-bold uppercase tracking-wider text-sky-300 bg-sky-900/30 px-3 py-1 rounded-full animate-scaleIn"></span>
+            <span id="blogDate" class="text-sm text-slate-400"></span>
+          </div>
+          <div class="flex items-center gap-4">
+            <button id="likeButton" class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-all duration-300 hover:scale-105 hover-lift">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+              </svg>
+              <span id="likeCount">0</span>
+            </button>
+            <button id="shareButton" class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-all duration-300 hover:scale-105 hover-lift">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+              </svg>
+              Paylaş
+            </button>
+          </div>
+        </div>
+
+        <h1 id="blogTitle" class="text-4xl md:text-5xl font-extrabold mb-6 text-white leading-tight animate-fadeInUp stagger-2"></h1>
+        <p id="blogSummary" class="text-xl text-slate-300 mb-6 leading-relaxed animate-fadeInUp stagger-3"></p>
+        
+        <div class="flex items-center justify-between animate-fadeInUp stagger-4">
+          <div class="flex items-center gap-4 text-sm text-slate-400">
+            <span>Yazar: <span id="authorName" class="text-sky-300"></span></span>
+            <span>•</span>
+            <span id="blogId">#<span id="blogIdValue"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="border-t border-slate-700 mb-8 animate-fadeInUp stagger-5"></div>
+
+      <!-- Blog Content -->
+      <div id="blogContent" class="prose prose-lg prose-invert max-w-none animate-fadeInUp stagger-6">
+        <!-- Content will be loaded here -->
+      </div>
+
+      <!-- Back Button -->
+      <div class="mt-12 pt-8 border-t border-slate-700 animate-fadeInUp">
+        <a href="/blog" class="inline-flex items-center text-sky-400 hover:text-sky-300 transition-all duration-300 hover:scale-105 hover-lift">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Blog Listesine Dön
+        </a>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="bg-red-900/20 border border-red-500/30 rounded-3xl shadow-2xl p-12 max-w-4xl mx-auto text-center hidden animate-bounce">
+      <div class="text-red-400 mb-4">
+        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold text-red-400 mb-2">Blog Bulunamadı</h3>
+      <p class="text-slate-300 mb-6">Aradığınız blog yazısı bulunamadı veya yüklenirken bir hata oluştu.</p>
+      <a href="/blog" class="inline-flex items-center bg-sky-500 hover:bg-sky-400 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover-lift">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Blog Listesine Dön
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 py-8 text-center text-sm text-slate-400 animate-fadeInUp">
+    &copy; 2025 HaberAkışı. Tüm hakları saklıdır.
+  </footer>
+
+  <script>
+    // URL'den blog ID'sini al
+    const urlPath = window.location.pathname;
+    const blogId = parseInt(urlPath.split('id=')[1]);
+
+    // UI elementleri
+    const loadingState = document.getElementById('loadingState');
+    const blogDetail = document.getElementById('blogDetail');
+    const errorState = document.getElementById('errorState');
+    const blogImageContainer = document.getElementById('blogImageContainer');
+    const blogImage = document.getElementById('blogImage');
+    const likeButton = document.getElementById('likeButton');
+    const likeCount = document.getElementById('likeCount');
+    const shareButton = document.getElementById('shareButton');
+
+    // Blog verilerini backend'den çek
+    async function loadBlogDetail() {
+      try {
+        // Loading state'i göster
+        loadingState.classList.remove('hidden');
+        blogDetail.classList.add('hidden');
+        errorState.classList.add('hidden');
+
+        // Backend'e POST isteği gönder
+        const response = await fetch('/api/blog-detail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: blogId })
+        });
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          // Başarılı response - blog verilerini göster
+          displayBlog(result.data);
+        } else {
+          // Hata durumu
+          showError(result.message || 'Blog bulunamadı');
+        }
+      } catch (error) {
+        console.error('Blog yüklenirken hata:', error);
+        showError('Blog yüklenirken bir hata oluştu');
+      }
+    }
+
+    // Blog verilerini UI'da göster
+    function displayBlog(blog) {
+      document.getElementById('blogTitle').textContent = blog.title;
+      document.getElementById('blogSummary').textContent = blog.summary;
+      document.getElementById('blogDate').textContent = blog.date;
+      document.getElementById('blogIdValue').textContent = blog.id;
+      document.getElementById('authorName').textContent = blog.author || 'Bilinmiyor';
+      likeCount.textContent = blog.likes || 0;
+      
+      // Kategori
+      const cat = (blog.category || 'genel');
+      const slug = cat.toLowerCase().replaceAll(' ', '-');
+      document.getElementById('blogCategory').textContent = cat;
+      
+      // Görsel
+      if (blog.image_path) {
+        blogImage.src = blog.image_path;
+        blogImageContainer.classList.remove('hidden');
+      } else {
+        blogImageContainer.classList.add('hidden');
+      }
+      
+      // Content'i paragraflara böl ve göster
+      const contentDiv = document.getElementById('blogContent');
+      const paragraphs = blog.content.split('\n').filter(p => p.trim());
+      
+      contentDiv.innerHTML = paragraphs.map(paragraph => 
+        `<p class="mb-6 text-slate-300 leading-relaxed">${paragraph.trim()}</p>`
+      ).join('');
+
+      // UI state'lerini güncelle
+      loadingState.classList.add('hidden');
+      blogDetail.classList.remove('hidden');
+      errorState.classList.add('hidden');
+    }
+
+    // Beğeni butonu
+    likeButton.addEventListener('click', async () => {
+      try {
+        const response = await fetch(`/api/blogs/${blogId}/like`, {
+          method: 'POST'
+        });
+        const result = await response.json();
+        if (result.success) {
+          likeCount.textContent = result.likes;
+          if (result.liked) {
+            likeButton.classList.add('text-sky-400');
+            likeButton.classList.remove('text-slate-300');
+            likeButton.classList.add('animate-bounce');
+            setTimeout(() => likeButton.classList.remove('animate-bounce'), 1000);
+          } else {
+            likeButton.classList.remove('text-sky-400');
+            likeButton.classList.add('text-slate-300');
+          }
+        } else {
+          alert(result.message || 'Beğeni işlemi başarısız');
+        }
+      } catch (error) {
+        console.error('Beğeni hatası:', error);
+        alert('Beğeni işlemi sırasında hata oluştu');
+      }
+    });
+
+    // Paylaş butonu
+    shareButton.addEventListener('click', () => {
+      if (navigator.share) {
+        navigator.share({
+          title: document.getElementById('blogTitle').textContent,
+          text: document.getElementById('blogSummary').textContent,
+          url: window.location.href
+        });
+      } else {
+        // Fallback: URL'yi kopyala
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          alert('Link kopyalandı!');
+        });
+      }
+    });
+
+    // Hata durumunu göster
+    function showError(message) {
+      loadingState.classList.add('hidden');
+      blogDetail.classList.add('hidden');
+      errorState.classList.remove('hidden');
+      
+      // Hata mesajını güncelle
+      const errorMessage = errorState.querySelector('p');
+      if (errorMessage) {
+        errorMessage.textContent = message;
+      }
+    }
+
+    // Sayfa yüklendiğinde blog detayını çek
+    if (blogId && !isNaN(blogId)) {
+      loadBlogDetail();
+    } else {
+      showError('Geçersiz blog ID');
+    }
+  </script>
+</body>
+</html>
