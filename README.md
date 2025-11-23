@@ -47,24 +47,25 @@ Admin Features
     Pagination and trending article calculations
 
 📁 Project Structure
-blog/
-├── app.py               # Main Flask application
-├── static/              # CSS, JS, images, and uploads
-│   └── uploads/         # Uploaded images
-├── templates/           # HTML templates
-├── blog.db              # SQLite database (auto-generated)
-├── .env                 # Environment variables for email credentials
+    
+    blog/
+    ├── app.py               # Main Flask application
+    ├── static/              # CSS, JS, images, and uploads
+    │   └── uploads/         # Uploaded images
+    ├── templates/           # HTML templates
+    ├── blog.db              # SQLite database (auto-generated)
+    ├── .env                 # Environment variables for email credentials
 
 ⚡ Installation
 
 Clone the repository:
 
-git clone https://github.com/asilgumus/Haber-Akisi.git
-cd Haber-Akisi/blog
+    git clone https://github.com/asilgumus/Haber-Akisi.git
+    cd Haber-Akisi/blog
 
 Install dependencies:
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 
 Create a .env file in the project root:
@@ -78,12 +79,10 @@ Create a .env file in the project root:
 
 Run the application:
 
-python app.py
-
-
+    python app.py
 Open in browser:
 
-http://127.0.0.1:5000/
+    http://127.0.0.1:5000/
 
 🔧 Usage
 
@@ -132,4 +131,4 @@ http://127.0.0.1:5000/
 
 📄 License
 
-MIT License © [Your Name]
+MIT License © [Asil Doğan Gümüş]
