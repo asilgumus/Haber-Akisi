@@ -3,47 +3,48 @@ NewsFlow - Dynamic News & Blogging Platform
 A modern web application built with Flask that allows users to browse, search, and filter news articles (blogs). Admins can manage content through a secure dashboard, while users can interact with posts via likes and contact forms.
 
 🚀 Features
-    User Features
 
-        Browse news articles sorted by popularity (likes) and date.
+User Features
 
-        Search and filter articles by category.
+    Browse news articles sorted by popularity (likes) and date.
 
-        View trending articles.
+    Search and filter articles by category.
 
-        Interact via likes (IP-based tracking to prevent duplicate likes).
+    View trending articles.
 
-        Contact admin via a contact form (emails sent via SMTP).
+    Interact via likes (IP-based tracking to prevent duplicate likes).
 
-        Responsive and user-friendly interface.
+    Contact admin via a contact form (emails sent via SMTP).
 
-    Admin Features
+    Responsive and user-friendly interface.
 
-        Secure login to the admin dashboard.
+Admin Features
 
-        Create, edit, and delete articles.
+    Secure login to the admin dashboard.
 
-        Upload images for articles.
+    Create, edit, and delete articles.
 
-        Manage article categories dynamically.
+    Upload images for articles.
 
-        View all articles with likes and author info.
+    Manage article categories dynamically.
 
-        Technical Features
+    View all articles with likes and author info.
 
-        Flask web framework
+    Technical Features
 
-        SQLite database with automatic migrations
+    Flask web framework
 
-        Image uploads with file validation
+    SQLite database with automatic migrations
 
-        Secure password hashing using SHA256
+    Image uploads with file validation
 
-        Session-based authentication
+    Secure password hashing using SHA256
 
-        Email notifications for contact form using SMTP
+    Session-based authentication
 
-        Pagination and trending article calculations
+    Email notifications for contact form using SMTP
+
+    Pagination and trending article calculations
 
 📁 Project Structure
 blog/
