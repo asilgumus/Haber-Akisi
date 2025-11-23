@@ -1,4 +1,4 @@
-NewsFlow - Dynamic News & Blogging Platform
+Haber Akışı - Dynamic News & Blogging Platform
 
 A modern web application built with Flask that allows users to browse, search, and filter news articles (blogs). Admins can manage content through a secure dashboard, while users can interact with posts via likes and contact forms.
 
@@ -60,7 +60,7 @@ blog/
 Clone the repository:
 
 git clone https://github.com/asilgumus/Haber-Akisi.git
-cd newsflow/blog
+cd Haber-Akisi/blog
 
 Install dependencies:
 
@@ -73,7 +73,7 @@ Create a .env file in the project root:
     SMTP_PORT=587
     SMTP_USERNAME=your_email@gmail.com
     SMTP_PASSWORD=your_email_password
-    ADMIN_EMAIL=admin@newsflow.com
+    ADMIN_EMAIL=admin@haberakisi.com
 
 
 Run the application:
